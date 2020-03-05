@@ -1,0 +1,33 @@
+
+body
+ {
+    background-color: lightblue;  
+ }
+
+#haetutTiedot{
+    margin-bottom: 25px;
+}
+#sinunArvostelusi
+{
+    margin-bottom: 25px;
+}
+#jarjestaminen
+{
+    background-color: white;
+    display: table;
+}
+.jarjestaja
+{
+    display: table-cell;
+    float: left;
+    margin-left: 25px;
+}
+#leffa
+{
+    margin-bottom: 50px;
+}
+.kuva
+{
+    width: 150px;
+    height: 222.5px;
+}
