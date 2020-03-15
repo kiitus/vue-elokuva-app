@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Films i have seen</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -55,22 +53,14 @@
         
     
 	<!--<div v-for="arvostelu in arvostelut" v-if="arvostelu.active">  -->
-       
-        <div class="d-flex flex-wrap"> 
     <div v-for="arvostelu in valitutElokuvat" :key="arvostelu.id">
-            <div id="leffa" class="card p-2 bd-highlight" style="width: 18rem;">
-                <img class="card-img-top" v-bind:src="arvostelu.poster">
-                <div class="card-body">
-                    <h5 class="card-title"> {{arvostelu.title}} {{arvostelu.year}}</h5>
-                    <p class="card-text">Katsottu: {{arvostelu.watchDay}}</p>
-                    <p class="card-text">IMDB: {{arvostelu.imdbRating}}</p>
-                    <p class="card-text">Sinä: {{arvostelu.yourRating}}</p>
-                    <p class="card-text">Arvostelu: {{arvostelu.review}}</p>
-                    <button class="btn btn-primary" v-on:click="poista(arvostelu.id)">Poista</button>
-                </div>
-            
-            </div>
-    </div>
+    <div id="leffa">
+    {{arvostelu.title}} {{arvostelu.year}} </br> IMDB: {{arvostelu.imdbRating}}</br> Sinä: {{arvostelu.yourRating}} </br> 
+    Arvostelu: {{arvostelu.review}}</br>
+    
+    <img class="kuva" v-bind:src="arvostelu.poster"> 
+    <button v-on:click="poista(arvostelu.id)">Poista</button>
+	</div>
     </div>
     
 
