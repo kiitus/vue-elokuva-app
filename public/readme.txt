@@ -7,5 +7,5 @@ omien arvoiden mukaan sekä lisäämisjärjestykseen
 Elokuvien tietoja voidaan tarkastella valinnan mukaan joko yhtä kerrallaan tai useaa kerrallaan.
 Poistaminen ohjelmasta tapahtuu näiden tarkastelujen kautta.
 
-Ohjelma on julkaistu:  https://leffa.herokuapp.com/
+Ohjelma on julkaistu:  http://leffa.herokuapp.com/
  
