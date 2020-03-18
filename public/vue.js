@@ -18,7 +18,7 @@ var app = new Vue({
         montaElokuvaa: false
       },
     computed:{
-          valitutElokuvat(event)
+          valitutElokuvat(event)       //taulukko valituista (active==true) elokuvista
           {
             return this.arvostelut.filter((value)=>
             {
@@ -28,35 +28,40 @@ var app = new Vue({
           }
     },
     methods:{
-        tallenna: function(event)   
+        tallenna: function(event)   //metodi tallennukselle
         { 
+            //löytyykö elokuva jo listattuna
           let onkoLisatty = this.arvostelut.findIndex((arvostelu) => arvostelu.title == this.title)
           if(onkoLisatty == -1)
           {
          
+            //lisätään jos ei viel ole
           this.id++;
           arvostelu={id:this.id,active:false,title:this.title,year:this.year,poster:this.poster,imdbRating:this.imdbRating,yourRating:parseFloat(this.yourRating),review:this.review,watchDay:this.watchDay};
-         // arvostelu={title,year,poster,imdbRating,yourRating,review}
+         
           this.arvostelut.push(arvostelu);
+
+          //tyhjätään tiedot
           this.nayta=false;
           this.review= "";
           this.yourRating=5;
           this.haettu = "";
           
         }
-        else
+        else    //elokuva oli jo listalla
         {
           alert("Kyseinen elokuva oli jo listalla");
           this.nayta = false;
           this.haettu = "";
         }
         },
-        haku: function (event)
+        haku: function (event)   //Haun suorittaminen API:sta
             {
               
                this.osoite = `http://www.omdbapi.com/?t=${this.haettu}&apikey=d20392f7`
              axios.get(app.osoite).then(function (response) 
              {
+               //Hausta saadut tiedot
                 app.nayta=true;
                console.log(response);
                 app.title = response.data.Title;
@@ -65,20 +70,22 @@ var app = new Vue({
                 app.imdbRating = response.data.imdbRating;
                 var d = new Date();
                 app.watchDay = d.toLocaleDateString();
-              if(!app.title)
+              if(!app.title)  //jos ei saatu mitään, piilotetaan tulokset
               {
                 
                 app.nayta=false;
               }
                
              })
-        .       catch(function (error) {
+        .       catch(function (error) {      //virheen käsittely
               console.log("IN CATCH")
                 app.answer = 'Error! Could not reach the API. ' + error
                 app.title = "virhe haussa!"
                 
              })
             },
+
+            //Neljää seuraavaa käytetään elokuvien järjestämiseen
             jarjestaIMDB: function(event)
             {
               this.arvostelut.sort((a,b)=>
@@ -112,6 +119,8 @@ var app = new Vue({
                 return a.id - b.id
               })
             },
+
+            //annettu arvostelu on oikein muotoinen
             arvosteluKunnossa: function(event)
             {
               if(this.yourRating > 10)
@@ -123,6 +132,8 @@ var app = new Vue({
                 this.yourRating = 0;
               }
             },
+
+            //nollataan valitut kun vaihdetaan näytettävä monesta -> yhteen
             nollaaNaytot: function(event)
             {
               this.montaElokuvaa = false;
@@ -134,6 +145,8 @@ var app = new Vue({
              
              )
             },
+
+            //kun käytetään yhden näyttmistä
             naytatTiedot: function(id_parametrina)
             {
 
@@ -141,25 +154,30 @@ var app = new Vue({
               
             // this.arvostelut.find( ( id ) =>   console.log("(id)"+id.id));
 
-
+              //etsitään näytettävä
               const nayta = this.arvostelut.find( ( {id} ) => id === id_parametrina );
               nayta.active = true;
 
+              //piilotetaan edellinen näytettävä
               const piilotaEdellinen = this.arvostelut.find( ( {id} ) => id === this.edellinenID );
               if(piilotaEdellinen)
               {
                 piilotaEdellinen.active=false;
               }
 
+              //jos yritetään näyttää samaa, ei piiloteta
               if(this.edellinenID == id_parametrina)
               {
                 nayta.active = true;
               }
 
+              //merkataan nykyinen edelliseksi uutta kutsua varten
               this.edellinenID = id_parametrina;  
 
             
             },
+
+            //poistetaan elokuva listalta
             poista: function(id_parametrina)
             {
               const poista = this.arvostelut.find( ( {id} ) => id === id_parametrina );
