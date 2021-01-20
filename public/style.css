@@ -1,18 +1,16 @@
-/* Taustaväri */
-body   
+
+body
  {
     background-color: lightblue;  
  }
-/*Vähän väliä hauttujen tietojen jälkeen*/
+
 #haetutTiedot{
     margin-bottom: 25px;
 }
-/*Vähän väliä arvostelun antamisen jälkeen*/
 #sinunArvostelusi
 {
     margin-bottom: 25px;
 }
-/*Järjestys logiikan valinnan näyttämisen muotoilu*/
 #jarjestaminen
 {
     background-color: white;
@@ -24,8 +22,10 @@ body
     float: left;
     margin-left: 25px;
 }
-
-/*Posterin koko haetuissa tiedoissa*/
+#leffa
+{
+    margin-bottom: 50px;
+}
 .kuva
 {
     width: 150px;
