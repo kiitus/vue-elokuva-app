@@ -65,6 +65,7 @@ var app = new Vue({
                 app.imdbRating = response.data.imdbRating;
                 var d = new Date();
                 app.watchDay = d.toLocaleDateString();
+                app.haettu="";
               if(!app.title)
               {
                 

@@ -1,82 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Films i have seen</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
+
 <body>
-    <div id="app">
-    <h2>Lisää näkemäsi elokuva</h2>
-    <input type="text" v-model="haettu">
-    <button v-on:click="haku">Hae</button>
-   <div id="haetutTiedot" v-if="nayta">
-    Haettu elokuva:{{title}}</br>
-    Ilmestynyt vuonna:{{year}}</br>
-    IMDB pisteet:{{imdbRating}}</br>
-    <img class="kuva" v-bind:src="poster" alt="elokuvan julista">
-    </div></br>
-
-    <div id="sinunArvostelusi" v-if="nayta">
-    Sinun pisteesi:
-    <input type="number" value="5.0" step="0.1" min="0" max="10" v-model.number="yourRating" @change="arvosteluKunnossa"><br>
-    <label for="review">Kirjoita arvostelusi</label></br>
-    <textarea id="review" rows="4" cols="50" v-model="review">Kirjoita arvostelu</textarea>
-    <button v-on:click="tallenna">Tallenna</button></div>
-    </br>
-
-    <h2>Näkemäsi elokuvat</h2>
- 
- <div id="jarjestaminen">
-        <div class="jarjestaja" v-on:click= "jarjestaIMDB">Järjestä IMDB arvioiden mukaan</div>
-        <div class="jarjestaja" v-on:click= "jarjestaSinunArvio">Järjestä arvioidesi mukaan</div>
-        <div class="jarjestaja" v-on:click= "jarjestaAakkoset">Järjestä aakkosjärjestykseen</div>
-        <div class="jarjestaja" @click= "jarjestaLisaysJ"> Järjestä lisäysjärjestykseen</div>
+    <div id="app" class="container">
+        <h2 class="my-4">Lisää näkemäsi elokuva</h2>
+        <div class="my-3">
+            <input type="text"  v-on:keyup.enter="haku" v-model="haettu">
+            <button class="btn btn-primary" v-on:click="haku">Hae</button>
         </div>
-		
-    <div id="naytetaanYksiE" v-if=!montaElokuvaa>
-        <p v-for="arvostelu in arvostelut" :key="arvostelu.id" @click="naytatTiedot(arvostelu.id)">{{ arvostelu.title }} {{arvostelu.year}}</p>
-    </div>
-    <div id="naytetaanMontaE" v-else>
-        <p v-for="arvostelu in arvostelut " :key="arvostelu.id" @click="arvostelu.active=!arvostelu.active">{{ arvostelu.title }} {{arvostelu.year}}</p>
-    </div>
-
-
-    <h2>Valittujen elokuvien tiedot</h2>
-
-    <section>
-        <input type="radio" v-model="montaElokuvaa" name="usea" value="false" v-on:change="nollaaNaytot" checked="checked">Yksi
-         <input type="radio" v-model="montaElokuvaa" name="usea" value="true">Monta
-        </section></br>
-        
-    
-	<!--<div v-for="arvostelu in arvostelut" v-if="arvostelu.active">  -->
-       
-        <div class="d-flex flex-wrap"> 
-    <div v-for="arvostelu in valitutElokuvat" :key="arvostelu.id">
-            <div id="leffa" class="card p-2 bd-highlight" style="width: 18rem;">
-                <img class="card-img-top" v-bind:src="arvostelu.poster">
-                <div class="card-body">
-                    <h5 class="card-title"> {{arvostelu.title}} {{arvostelu.year}}</h5>
-                    <p class="card-text">Katsottu: {{arvostelu.watchDay}}</p>
-                    <p class="card-text">IMDB: {{arvostelu.imdbRating}}</p>
-                    <p class="card-text">Sinä: {{arvostelu.yourRating}}</p>
-                    <p class="card-text">Arvostelu: {{arvostelu.review}}</p>
-                    <button class="btn btn-primary" v-on:click="poista(arvostelu.id)">Poista</button>
+        <div class="row">
+            <div class="col-3 ">
+                <div id="haetutTiedot" v-if="nayta">
+                    <b>Nimi: {{title}}</b></br>
+                    Ilmestynyt vuonna: {{year}}</br>
+                    IMDB pisteet: {{imdbRating}}</br>
+                    <img class="kuva mt-3" v-bind:src="poster" alt="elokuvan julista">
                 </div>
-            
             </div>
-    </div>
-    </div>
-    
+            <div class="col-6 row align-items-end">
+                <div id="sinunArvostelusi" v-if="nayta">
+                    Sinun pisteesi:
+                    <input type="number" value="5.0" step="0.1" min="0" max="10" v-model.number="yourRating"
+                        @change="arvosteluKunnossa"><br>
+                    <label for="review">Kirjoita arvostelusi</label></br>
+                    <textarea id="review" rows="10" cols="50" v-model="review">Kirjoita arvostelu</textarea>
+                    <button  class="btn btn-primary" v-on:click="tallenna">Tallenna</button>
+                </div>
+            </div>
+        </div>
 
-</div>
+        <h2 class="mb-3">Näkemäsi elokuvat</h2>
+
+        <div id="jarjestaminen" class="mb-3">
+            <div class="jarjestaja" v-on:click="jarjestaIMDB">Järjestä IMDB arvioiden mukaan</div>
+            <div class="jarjestaja" v-on:click="jarjestaSinunArvio">Järjestä arvioidesi mukaan</div>
+            <div class="jarjestaja" v-on:click="jarjestaAakkoset">Järjestä aakkosjärjestykseen</div>
+            <div class="jarjestaja" @click="jarjestaLisaysJ"> Järjestä lisäysjärjestykseen</div>
+        </div>
+
+        <div id="naytetaanYksiE" v-if=!montaElokuvaa>
+            <p v-for="arvostelu in arvostelut" :key="arvostelu.id" @click="naytatTiedot(arvostelu.id)">{{
+                arvostelu.title }} {{arvostelu.year}}</p>
+        </div>
+        <div id="naytetaanMontaE" v-else>
+            <p v-for="arvostelu in arvostelut " :key="arvostelu.id" @click="arvostelu.active=!arvostelu.active">{{
+                arvostelu.title }} {{arvostelu.year}}</p>
+        </div>
+
+
+        <h2>Valittujen elokuvien tiedot</h2>
+
+        <section>
+            <input type="radio" v-model="montaElokuvaa" name="usea" value="false" v-on:change="nollaaNaytot"
+                checked="checked">Yksi
+            <input type="radio" v-model="montaElokuvaa" name="usea" value="true">Monta
+        </section></br>
+
+
+        <!--<div v-for="arvostelu in arvostelut" v-if="arvostelu.active">  -->
+
+        <div class="d-flex flex-wrap">
+            <div v-for="arvostelu in valitutElokuvat" :key="arvostelu.id">
+                <div id="leffa" class="card p-2 bd-highlight pr-4" style="width: 18rem;">
+                    <img class="card-img-top" v-bind:src="arvostelu.poster">
+                    <div class="card-body">
+                        <h5 class="card-title"> {{arvostelu.title}} {{arvostelu.year}}</h5>
+                        <p class="card-text">Katsottu: {{arvostelu.watchDay}}</p>
+                        <p class="card-text">IMDB: {{arvostelu.imdbRating}}</p>
+                        <p class="card-text">Sinä: {{arvostelu.yourRating}}</p>
+                        <p class="card-text">Arvostelu: {{arvostelu.review}}</p>
+                        <button class="btn btn-primary" v-on:click="poista(arvostelu.id)">Poista</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="vue.js"></script>    
+    <script src="vue.js"></script>
 </body>
+
 </html>
