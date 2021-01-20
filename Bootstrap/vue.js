@@ -54,7 +54,7 @@ var app = new Vue({
         haku: function (event)
             {
               
-               this.osoite = `http://www.omdbapi.com/?t=${this.haettu}&apikey=d20392f7`
+               this.osoite = `https://www.omdbapi.com/?t=${this.haettu}&apikey=d20392f7`
              axios.get(app.osoite).then(function (response) 
              {
                 app.nayta=true;
