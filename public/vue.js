@@ -97,7 +97,7 @@ var app = new Vue({
     },
     jarjestaIMDB: function (event) {
       this.arvostelut.sort((a, b) => {
-        return b.imdbRating.localeCompare(a.imdbRating)
+        return b.imdbRating - a.imdbRating
       })
 
 
@@ -117,7 +117,7 @@ var app = new Vue({
     },
     jarjestaLisaysJ: function (event) {
       this.arvostelut.sort((a, b) => {
-        return a.id - b.id
+        return a.day - b.day
       })
     },
     arvosteluKunnossa: function (event) {
